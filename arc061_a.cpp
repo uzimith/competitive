@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 #include <iostream>
 #include <string>
 
@@ -9,35 +10,24 @@ using namespace std;
 char C[10];
 int S[10];
 int len;
-int memo[10][10][10];
 
-int calc(int start, int end, int delimiter) {
-  // if (memo[start][end][delimiter] == 1) {
-  //   return 0;
-  // }
-  //
-  // memo[start][end][delimiter] = 1;
-
-  if (delimiter > 0 && start == end) {
+long int calc(long int acc, int pos, int last, int delimiter) {
+  if (delimiter == len) {
     return 0;
-  } else if (delimiter == 0) {
-    auto sum = 0;
-    for (auto i = start; i <= end; i++) {
-      sum = sum * 10 + S[i];
+  }
+  if (pos == len - 1) {
+    long int after = 0;
+    for (auto i = last; i < len; i++) {
+      after = after * 10 + S[i];
     }
-    return sum;
+    return acc + after;
   } else {
-    auto sum = 0;
-    for (auto i = 0; i < end - start; i++) {
-      auto before = calc(start, start + i, delimiter - 1);
-      auto after = calc(start + i + 1, end, delimiter - 1);
-      printf("before:start=%d end=%d delimiter=%d %d\n", start, start + i,
-             delimiter - 1, before);
-      printf("after :start=%d end=%d delimiter=%d %d\n\n", start + i + 1, end,
-             delimiter - 1, after);
-      sum += before + after;
+    long int before = 0;
+    for (auto i = last; i <= pos; i++) {
+      before = before * 10 + S[i];
     }
-    return sum;
+    return calc(acc + before, pos + 1, pos + 1, delimiter + 1) +
+           calc(acc, pos + 1, last, delimiter);
   }
 }
 
@@ -49,15 +39,6 @@ int main() {
   for (auto i = 0; i < len; i++)
     S[i] = C[i] - '0';
 
-  fill(memo[0][0], memo[10][0], 0);
-
-  auto sum = 0;
-  for (auto i = 0; i < len; i++) {
-    auto temp = calc(0, len - 1, i);
-    printf("i=%d temp=%d\n", i, temp);
-    sum += temp;
-  }
-
-  printf("%d\n", sum);
+  printf("%ld\n", calc(0, 0, 0, 0));
   return 0;
 }
