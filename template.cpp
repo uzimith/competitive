@@ -20,6 +20,33 @@ int dy[] = {-1, 0, 1, 0};
 bool in_field(int W, int H, int x, int y) {
   return (0 <= x && x < W) && (0 <= y && y < H);
 }
+
+// pair
+template <typename T1, typename T2>
+ostream &operator<<(ostream &s, const pair<T1, T2> &p) {
+  return s << "(" << p.first << ", " << p.second << ")";
+}
+// vector
+template <typename T> ostream &operator<<(ostream &s, const vector<T> &v) {
+  int len = v.size();
+  for (int i = 0; i < len; ++i) {
+    s << v[i];
+    if (i < len - 1)
+      s << "\t";
+  }
+  return s;
+}
+
+// 2 dimentional vector
+template <typename T>
+ostream &operator<<(ostream &s, const vector<vector<T>> &vv) {
+  int len = vv.size();
+  for (int i = 0; i < len; ++i) {
+    s << vv[i] << endl;
+  }
+  return s;
+}
+
 // }}}
 
 // url:
