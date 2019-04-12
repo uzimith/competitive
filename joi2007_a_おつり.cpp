@@ -40,7 +40,24 @@ template <typename T> ostream &operator<<(ostream &s, const vector<T> &v) {
 // }}}
 
 // url:
+// https://www.ioi-jp.org/joi/2007/2008-yo-prob_and_sol/2008-yo-t1/2008-yo-t1.html
 
-int main() { return 0; }
+int coin[] = {500, 100, 50, 10, 5, 1};
+
+int main() {
+  int cost;
+  cin >> cost;
+  cost = 1000 - cost;
+  int ans = 0;
+  rep(i, 6) {
+    while (cost != 0 && cost >= coin[i]) {
+      // cout << coin[i] << endl;
+      ans++;
+      cost -= coin[i];
+    }
+  }
+  cout << ans << endl;
+  return 0;
+}
 
 // vim: foldmethod=marker

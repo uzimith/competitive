@@ -39,8 +39,45 @@ template <typename T> ostream &operator<<(ostream &s, const vector<T> &v) {
 
 // }}}
 
-// url:
+// url: https://atcoder.jp/contests/abc054/tasks/abc054_c
 
-int main() { return 0; }
+int N, M, a[8 * 7 / 2], b[8 * 7 / 2];
+int n[8];
+
+int main() {
+  cin >> N >> M;
+  rep(i, M) {
+    int ta, tb;
+    cin >> ta >> tb;
+    a[i] = ta - 1;
+    b[i] = tb - 1;
+  }
+
+  rep(i, N) n[i] = i;
+
+  int ans = 0;
+
+  do {
+    // for (int i = 0; i < N; i++) {
+    //   cout << n[i];
+    //   if (i != N - 1)
+    //     cout << " ";
+    // }
+    // cout << endl;
+
+    int step = 0;
+    rep(i, N - 1) rep(j, M) {
+      if ((a[j] == n[i] && b[j] == n[i + 1]) ||
+          (b[j] == n[i] && a[j] == n[i + 1])) {
+        step++;
+      }
+    }
+    // cout << step << endl;
+    if (step == N - 1)
+      ans++;
+  } while (next_permutation(n + 1, n + N));
+  cout << ans << endl;
+  return 0;
+}
 
 // vim: foldmethod=marker
