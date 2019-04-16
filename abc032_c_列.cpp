@@ -39,40 +39,38 @@ template <typename T> ostream &operator<<(ostream &s, const vector<T> &v) {
 
 // }}}
 
-// url: https://atcoder.jp/contests/abc124/tasks/abc124_d
+// url: https://abc032.contest.atcoder.jp/tasks/abc032_c
 
-int N, K;
-string S;
+int N, K, S[100000];
 
 int main() {
-  cin >> N >> K >> S;
+  cin >> N >> K;
 
-  int l = 0, r = 0, k = 0, sum = 0;
-  int ans = 0;
-  while (r < N) {
-    while (r < N && k < K) {
-      if (S[r] == '0' && S[r + 1] == '1') {
-        k++;
-      }
-      r++;
-      sum++;
+  rep(i, N) {
+    cin >> S[i];
+    if (S[i] == 0) {
+      cout << N << endl;
+      return 0;
+    }
+  }
+
+  int s = 0, t = 0, ans = 0;
+  int64 acc = 1;
+  while (t < N) {
+    while (t < N && acc * S[t] <= K) {
+      acc *= S[t++];
     }
 
-    while (S[r] == '1') {
-      r++;
-      sum++;
-    }
-    ans = max(sum, ans);
-    while (k >= K) {
-      if (S[l] == '0' && S[l + 1] == '1') {
-        k--;
-      }
-      l++;
-      sum--;
+    ans = max(t - s, ans);
+
+    if (s != t) {
+      acc /= S[s++];
+    } else {
+      s++;
+      t++;
     }
   }
   cout << ans << endl;
-
   return 0;
 }
 
