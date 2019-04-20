@@ -44,18 +44,16 @@ template <typename T> ostream &operator<<(ostream &s, const vector<T> &v) {
 int N, M;
 pair<int, int> P[100000];
 
-bool comp(pair<int, int> a, pair<int, int> b) {
-  if (a.second != b.second) {
-    return a.second < b.second;
-  } else {
-    return a.first < b.first;
-  }
-}
-
 int main() {
   cin >> N >> M;
   rep(i, M) { cin >> P[i].first >> P[i].second; }
-  sort(P, P + M, comp);
+  sort(P, P + M, [](pair<int, int> a, pair<int, int> b) {
+    if (a.second != b.second) {
+      return a.second < b.second;
+    } else {
+      return a.first < b.first;
+    }
+  });
 
   int ans = 0;
   int remove = 0;
