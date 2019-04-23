@@ -44,47 +44,27 @@ template <typename T> ostream &operator<<(ostream &s, const vector<T> &v) {
 int N;
 string S;
 
-typedef tuple<int, pair<int, int>, int> P;
-
 int main() {
   cin >> N >> S;
 
-  int dot = 0, sharp = 0;
-  int ans = 0;
+  int white = 0;
+  int black = 0;
+  rep(i, N) {
+    if (S[i] == '.') {
+      white++;
+    }
+  }
 
-  int j = 0;
-  priority_queue<P> que;
-  bool done[10000];
-  fill(done, 0);
-
+  int ans = white;
   rep(i, N) {
     if (S[i] == '#') {
-      if (dot != 0) {
-        que.push(P(min(sharp, dot), pair<int, int>(sharp, dot), j));
-        dot = 0;
-        sharp = 0;
-        j++;
-      }
-      sharp++;
+      black++;
     }
     if (S[i] == '.') {
-      dot++;
+      white--;
     }
+    ans = min(black + white, ans);
   }
-  que.push(P(min(sharp, dot), pair<int, int>(sharp, dot), j));
-
-  while (!que.empty()) {
-    P p = que.top();
-    que.pop();
-
-    // cout << get<0>(p) << " " << get<1>(p) << " " << get<2>(p) << endl;
-    if (done[get<2>(p)]) {
-      ans += get<1>(p).second;
-    } else {
-      ans += get<0>(p);
-    }
-  }
-
   cout << ans << endl;
 
   return 0;
